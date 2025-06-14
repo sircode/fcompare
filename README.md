@@ -104,6 +104,12 @@ out/
 └── dev_VS_production_DIFFERENCES.html
 ```
 
+## 🖼 Example Output
+
+Here's what your DIFFERENCES.html looks like with `fcompare`:
+
+![image](https://github.com/user-attachments/assets/017af389-1c97-450c-a744-e4aeec1e71dc)
+
 ---
 
 ## 📁 Excluding files
