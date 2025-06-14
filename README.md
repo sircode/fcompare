@@ -1,6 +1,6 @@
 #### fcompare README.md
 
-````markdown
+
 # 🧩 fcompare
 
 **fcompare** is a Bash-based command-line tool to compare two folders and generate clear reports on differences. It highlights file additions, deletions, and content changes using `rsync` and `diff`, with both plain-text and HTML output.
