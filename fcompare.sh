@@ -10,14 +10,15 @@ CUSTOM_OUTPUT=""
 EXCLUDE_FILE="exclude.txt"
 
 # Option parsing
-while getopts ":s:d:n:o:" opt; do
+while getopts ":s:d:n:o:x:" opt; do
   case $opt in
     s) SOURCE="$OPTARG" ;;
     d) TARGET="$OPTARG" ;;
     n) NAME="$OPTARG" ;;
     o) CUSTOM_OUTPUT="$OPTARG" ;;
+    x) EXCLUDE_FILE="$OPTARG" ;;
     \?) echo "❌ Invalid option: -$OPTARG" >&2; exit 1 ;;
-    :) echo "❌ Option -$OPTARG requires an argument." >&2; exit 1 ;;
+    :)  echo "❌ Option -$OPTARG requires an argument." >&2; exit 1 ;;
   esac
 done
 
