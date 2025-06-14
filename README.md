@@ -58,7 +58,7 @@ sudo rm /usr/local/bin/fcompare
 ## 🚀 Usage
 
 ```bash
-fcompare -s <source> -d <destination> -n <name> [-o <output folder>]
+fcompare -s <source> -d <destination> -n <name> [-o <output folder>] [-x <exclude file>]
 ```
 
 ### Required arguments:
@@ -67,10 +67,12 @@ fcompare -s <source> -d <destination> -n <name> [-o <output folder>]
 * `-d <destination>`: Destination folder to compare against (e.g. `../production`)
 * `-n <name>`: A short identifier to label the result files (e.g. `dev_VS_production`)
 
+
 ### Optional:
 
 * `-o <output folder>`: Where to store the result files
   Default: current directory
+* `-x <exclude file>`: exclude file (e.g. `./project/exclude.txt`)
 
 ---
 
