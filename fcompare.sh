@@ -8,6 +8,9 @@
 # Defaults
 CUSTOM_OUTPUT=""
 EXCLUDE_FILE="exclude.txt"
+HELPER="fcompare_html_report.php"
+HELPER_LOC="/usr/local/lib/fcompare/"
+HELPER_PATH="${HELPER_LOC}${HELPER}"
 
 # Option parsing
 while getopts ":s:d:n:o:x:" opt; do
@@ -21,6 +24,17 @@ while getopts ":s:d:n:o:x:" opt; do
     :)  echo "❌ Option -$OPTARG requires an argument." >&2; exit 1 ;;
   esac
 done
+
+
+
+# Later in the script, before rsync:
+if [ ! -f "$EXCLUDE_FILE" ]; then
+  echo "⚠️  Warning: Exclude file '$EXCLUDE_FILE' not found. Continuing without it."
+  EXCLUDE_OPTION=""
+else
+  EXCLUDE_OPTION="--exclude-from=$EXCLUDE_FILE"
+fi
+
 
 # Validate required options
 if [[ -z "$SOURCE" || -z "$TARGET" || -z "$NAME" ]]; then
@@ -45,7 +59,7 @@ else
 fi
 
 # Step 1: Build file list using rsync
-rsync -avun --checksum --exclude-from="$EXCLUDE_FILE" "$SOURCE/" "$TARGET/" \
+rsync -avun --checksum $EXCLUDE_OPTION "$SOURCE/" "$TARGET/" \
   | grep -v '/$' \
   | grep -vE '^(sending incremental file list|\.\/|^$)' \
   > "$RSYNC_RESULT"
@@ -72,9 +86,22 @@ while read -r filepath; do
   fi
 done < "$RSYNC_RESULT" > "$TXT_OUTPUT" 2>&1
 
+# Try system-wide first, then fallback to local
+if [ -f "$HELPER_PATH" ]; then
+  FINAL_HELPER="$HELPER_PATH"
+elif [ -f "./$HELPER" ]; then
+  FINAL_HELPER="./$HELPER"
+  echo "ℹ️  Using local $HELPER"
+else
+  echo "❌ HTML report generator '$HELPER' not found."
+  echo "   Expected at: $HELPER_PATH"
+  echo "   Or:          ./$HELPER"
+  exit 1
+fi
+
 # Step 3: Generate HTML report
 if [ -f "$TXT_OUTPUT" ]; then
-  php make_html_report.php "$TXT_OUTPUT" "$HTML_OUTPUT"
+  php "$FINAL_HELPER" "$TXT_OUTPUT" "$HTML_OUTPUT"
   echo "✅ HTML report generated at: $HTML_OUTPUT"
 else
   echo "❌ Failed: $TXT_OUTPUT not found."
