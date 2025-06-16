@@ -7,41 +7,53 @@
 
 ---
 
-## 🛠️ Installation
-
-### 🔧 1. Download the script
-
-If cloning from a repository:
-
-```bash
-git clone https://github.com/sircode/fcompare.git
-cd fcompare
-````
-
-Or copy the script manually and save it as `fcompare`.
+Perfect — that structure is clean, flexible, and user-friendly. Here's how you can document the two options in your `README.md` under an **Installation** section:
 
 ---
 
-### ⚙️ 2. Make it executable
+## 🔧 Installation
+
+You have **two options** to use `fcompare`:
+
+### Option 1: Local Use (Simple & Portable)
+
+Run `fcompare.sh` directly from your project or any folder.
+
+**Requirements in same folder:**
+
+* `fcompare.sh` (main script)
+* `exclude.txt` (optional exclude list)
+* `fcompare_html_report.php` (for HTML output)
 
 ```bash
-chmod +x fcompare
+./fcompare.sh -s ../src -d ../dst -n diff_report
 ```
 
+This method requires **no installation** and is great for testing or use in specific projects.
+
 ---
 
-### 📁 3. Install globally (optional)
+### Option 2: Global Install as a Command (`fcompare`)
 
-To use `fcompare` as a global command:
+Make `fcompare` available system-wide.
 
 ```bash
-sudo mv fcompare /usr/local/bin/
+sudo cp fcompare.sh /usr/local/bin/fcompare
+sudo chmod +x /usr/local/bin/fcompare
+sudo mkdir -p /usr/local/lib/fcompare
+sudo cp fcompare_html_report.php /usr/local/lib/fcompare/
 ```
 
 Now you can run it from anywhere:
 
 ```bash
-fcompare -s folderA -d folderB -n my_compare
+fcompare -s ../src -d ../dst -n my_report
+```
+
+💡 The HTML report generator will be found at:
+
+```
+/usr/local/lib/fcompare/fcompare_html_report.php
 ```
 
 ---
@@ -51,6 +63,7 @@ fcompare -s folderA -d folderB -n my_compare
 
 ```bash
 sudo rm /usr/local/bin/fcompare
+sudo rm /usr/local/lib/fcompare/fcompare_html_report.php
 ```
 
 ---
