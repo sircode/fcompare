@@ -123,7 +123,8 @@ out/
 
 Here's what your DIFFERENCES.html looks like with `fcompare`:
 
-![image](https://github.com/user-attachments/assets/017af389-1c97-450c-a744-e4aeec1e71dc)
+![fcompare_picb](https://github.com/user-attachments/assets/ba82176e-c784-4029-adfe-2386d6a576f8)
+
 
 ---
 
