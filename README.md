@@ -93,13 +93,13 @@ fcompare -s <source> -d <destination> -n <name> [-o <output folder>] [-x <exclud
 
 The following files will be created:
 
-* `RESULT_rsync_dry_<name>.txt`
+* `<name>_RESULT_RSYNC_DRY.txt`
   List of changed/missing files detected by `rsync --dry-run`
 
-* `DIFFERENCES_<name>.txt`
+* `<name>_DIFFERENCES.txt`
   Plain-text output showing line-by-line diffs
 
-* `DIFFERENCES_<name>.html`
+* `<name>_DIFFERENCES.html`
   Color-coded HTML report (green = added, red = removed)
 
 ---
@@ -114,9 +114,9 @@ Creates:
 
 ```
 out/
-├── dev_VS_production_RESULT_RSYNC_DRY.txt
-├── dev_VS_production_DIFFERENCES.txt
-└── dev_VS_production_DIFFERENCES.html
+├── RESULT_RSYNC_DRY_dev_VS_production.txt
+├── DIFFERENCESdev_VS_production.txt
+└── DIFFERENCES_dev_VS_production.html
 ```
 
 ## 🖼 Example Output
