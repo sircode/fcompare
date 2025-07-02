@@ -1,6 +1,6 @@
 <?php
 if ($argc < 3) {
-    echo "Usage: php make_html_report.php INPUT.txt OUTPUT.html\n";
+    echo "Usage: php fcompare_html_report.php INPUT.txt OUTPUT.html\n";
     exit(1);
 }
 
