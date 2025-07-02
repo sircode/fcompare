@@ -71,7 +71,7 @@ sudo rm /usr/local/lib/fcompare/fcompare_html_report.php
 ## 🚀 Usage
 
 ```bash
-fcompare -r -s <source> -d <destination> -n <name> [-o <output folder>] [-x <exclude file>]
+fcompare -r -s <source> -d <destination> -n <name> [-o <output folder>] [-x <exclude file>] [-P]
 ```
 
 ### Required arguments:
@@ -83,7 +83,8 @@ fcompare -r -s <source> -d <destination> -n <name> [-o <output folder>] [-x <exc
 
 ### Optional:
 
-* `-r`  : recursive  
+* `-r`  : recursive
+* `-P`  : generate a patch(1)-compatible diff
 * `-o <output folder>`: Where to store the result files
   Default: current directory
 * `-x <exclude file>`: exclude file (e.g. `./project/exclude.txt`)

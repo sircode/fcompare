@@ -2,7 +2,7 @@
 
 # ─────────────────────────────────────────
 # Compare two folders and generate diff report (dry-run)
-# Usage: fcompare.sh -s <source> -d <destination> -n <name> [-o <output.html>] [-r]
+# Usage: fcompare.sh -s <source> -d <destination> -n <name> [-o <output.html>] [-r] [-P]
 # ─────────────────────────────────────────
 
 CUSTOM_OUTPUT=""
@@ -11,9 +11,10 @@ HELPER="fcompare_html_report.php"
 HELPER_LOC="/usr/local/lib/fcompare/"
 HELPER_PATH="${HELPER_LOC}${HELPER}"
 RECURSIVE=false
+PATCH=false
 
 # Parse options
-while getopts ":s:d:n:o:x:r" opt; do
+while getopts ":s:d:n:o:x:rP" opt; do
   case $opt in
     s) SOURCE="$OPTARG" ;;
     d) TARGET="$OPTARG" ;;
@@ -21,6 +22,7 @@ while getopts ":s:d:n:o:x:r" opt; do
     o) CUSTOM_OUTPUT="$OPTARG" ;;
     x) EXCLUDE_FILE="$OPTARG" ;;
     r) RECURSIVE=true ;;
+    P) PATCH=true ;;
     \?) echo "❌ Invalid option: -$OPTARG" >&2; exit 1 ;;
     :)  echo "❌ Option -$OPTARG requires an argument." >&2; exit 1 ;;
   esac
@@ -37,7 +39,7 @@ fi
 # Validate required options
 if [[ -z "$SOURCE" || -z "$TARGET" || -z "$NAME" ]]; then
   echo "❌ Missing required arguments."
-  echo "Usage: $0 -s <source> -d <dest> -n <name> [-o <output.html>] [-r]"
+  echo "Usage: $0 -s <source> -d <dest> -n <name> [-o <output.html>] [-r] [-P]"
   exit 1
 fi
 
@@ -77,16 +79,20 @@ fi
 echo "Generating $TXT_OUTPUT ..."
 {
   while read -r file; do
-    echo "=== $file ==="
-    if [ ! -f "$TARGET/$file" ]; then
-      echo "[MISSING IN TARGET]"
-    elif [ ! -f "$SOURCE/$file" ]; then
-      echo "[MISSING IN SOURCE]"
+    if $PATCH; then
+      diff -u -N "$TARGET/$file" "$SOURCE/$file"
     else
-      diff -u "$TARGET/$file" "$SOURCE/$file" \
-        | grep -E '^(@@|[-+])' | grep -vE '^(---|\+\+\+)'
+      echo "=== $file ==="
+      if [ ! -f "$TARGET/$file" ]; then
+        echo "[MISSING IN TARGET]"
+      elif [ ! -f "$SOURCE/$file" ]; then
+        echo "[MISSING IN SOURCE]"
+      else
+        diff -u "$TARGET/$file" "$SOURCE/$file" \
+          | grep -E '^(@@|[-+])' | grep -vE '^(---|\+\+\+)'
+      fi
+      echo
     fi
-    echo
   done
 } < "$RSYNC_RESULT" > "$TXT_OUTPUT" 2>&1
 
