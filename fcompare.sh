@@ -2,7 +2,7 @@
 
 # ─────────────────────────────────────────
 # Compare two folders and generate diff report (dry-run)
-# Usage: fcompare.sh -s <source> -d <destination> -n <name> [-o <output.html>] [-r]
+# Usage: fcompare.sh -s <source> -d <destination> -n <name> [-o <output folder>] [-x <exclude file>] [-r]
 # ─────────────────────────────────────────
 
 CUSTOM_OUTPUT=""
@@ -37,7 +37,7 @@ fi
 # Validate required options
 if [[ -z "$SOURCE" || -z "$TARGET" || -z "$NAME" ]]; then
   echo "❌ Missing required arguments."
-  echo "Usage: $0 -s <source> -d <dest> -n <name> [-o <output.html>] [-r]"
+  echo "Usage: $0 -s <source> -d <dest> -n <name> [-o <output folder>] [-x <exclude file>] [-r]"
   exit 1
 fi
 
