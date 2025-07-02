@@ -38,14 +38,11 @@ foreach ($lines as $line) {
     } elseif (str_starts_with($line, '-')) {
         $html .= "<span class='del'>" . htmlspecialchars($line) . "</span>";
     } elseif (trim($line) === '') {
+        // skip blank lines
     } elseif (str_starts_with($line, '[MISSING IN TARGET]')) {
-         $html .= "<span class='missing'>" . htmlspecialchars($line) . "</span>";
-   
-    } elseif (trim($line) === '') {
+        $html .= "<span class='missing'>" . htmlspecialchars($line) . "</span>";
     } elseif (str_starts_with($line, '[MISSING IN SOURCE]')) {
-        $html .=  '⚠️' . $line;
-    } elseif (trim($line) === '') {
-        $html .= "<br>";
+        $html .= "<span class='missing'>" . htmlspecialchars($line) . "</span>";
     } else {
         $html .= "<span class='neutral'>" . htmlspecialchars($line) . "</span>";
     }
