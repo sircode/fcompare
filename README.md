@@ -150,7 +150,7 @@ Make sure you have the following installed:
 * `bash`
 * `rsync`
 * `diff`
-* `php` (required for `make_html_report.php` to generate the HTML output)
+* `php` (required for `fcompare_html_report.php` to generate the HTML output)
 
 ---
 
