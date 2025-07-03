@@ -62,12 +62,12 @@ fi
 # Step 1: Build file list
 if $RECURSIVE; then
   # full recursive, rsync dry-run
-  rsync -avun --checksum $EXCLUDE_OPTION "$SOURCE/" "$TARGET/" \
+  rsync -avn --checksum $EXCLUDE_OPTION "$SOURCE/" "$TARGET/" \
     | grep -v '/$' | grep -vE '^(sending incremental file list|\.\/|^$)' \
     > "$RSYNC_RESULT"
 else
   # root-only dry-run: skip all directories
-  rsync -avun --checksum --exclude '*/' $EXCLUDE_OPTION \
+  rsync -avn --checksum --exclude '*/' $EXCLUDE_OPTION \
     "$SOURCE/" "$TARGET/" \
     | grep -vE '^(sending incremental file list|\.\/|^$)' \
     > "$RSYNC_RESULT"
